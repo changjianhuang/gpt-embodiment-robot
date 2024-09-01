@@ -16,7 +16,7 @@ if not cap.isOpened():
     print("Camera couldn't Access!!!")
     exit()
 
-port = "/dev/cu.usbmodem70041DD3E6D02"  # 修改为您的 Arduino 的串口地址
+port = "/dev/cu.usbmodemF0F5BD5613602"  # 修改为您的 Arduino 的串口地址
 board = pyfirmata.Arduino(port)
 servo_pinX = board.get_pin('d:9:s')  # pin 9 Arduino
 servo_pinY = board.get_pin('d:10:s')  # pin 10 Arduino

@@ -8,9 +8,12 @@ import pygame
 import struct
 import time
 
+# https://api.openai.com/v1
 # 初始化OpenAI客户端
-OPEN_API_KEY = 'your_key' #  改为你的OpenAI API key
-client = OpenAI(api_key=OPEN_API_KEY)
+OPEN_API_KEY = 'fk197287-XWpT0ol2nko91wekf5Ie0znj2Aqdcuwq' #  改为你的OpenAI API key
+OPENAI_BASE_URL = 'https://oa.api2d.net/v1'
+
+client = OpenAI(api_key=OPEN_API_KEY, base_url=OPENAI_BASE_URL)
 
 def record_audio(duration=5, filename="output.wav", samplerate=16000):
     """Records audio for a specified duration and saves it as a WAV file."""
@@ -26,7 +29,6 @@ def record_audio(duration=5, filename="output.wav", samplerate=16000):
     print(f"Audio saved to {filename}")
 
 def speech_to_text(api_key, file_path):
-    client = OpenAI(api_key=api_key)
     with open(file_path, "rb") as audio_file:
         response = client.audio.transcriptions.create(
             model="whisper-1",
@@ -34,7 +36,7 @@ def speech_to_text(api_key, file_path):
         )
         return response.text
 
-def send_to_iphone(kaomoji, audio_file, host='192.168.101.10', port=12345): #  改为你的手机IP地址
+def send_to_iphone(kaomoji, audio_file, host='192.168.3.120', port=12345): #  改为你的手机IP地址
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((host, port))
@@ -59,10 +61,10 @@ def play_audio(file_path):
 def main():
     while True:
         # Record user's speech
-        record_audio(duration=5, filename="user_input.wav", samplerate=16000) #  录音不能自动停止，所以设置了固定的录音时长5秒，可以修改
+        record_audio(duration=5, filename="user_input.mp3", samplerate=16000) #  录音不能自动停止，所以设置了固定的录音时长5秒，可以修改
         
         # Convert speech to text
-        user_text = speech_to_text(OPEN_API_KEY, "user_input.wav")
+        user_text = speech_to_text(OPEN_API_KEY, "user_input.mp3")
         print("You said:", user_text)
         
         # Process text to generate response
